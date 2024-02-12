@@ -1,2 +1,5 @@
 # Path config
 raw_data_path: data/raw/hr_employee_attrition.csv
+
+# Debug config
+print_debug: true
