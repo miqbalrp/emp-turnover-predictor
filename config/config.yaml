@@ -1,5 +1,79 @@
 # Path config
-raw_data_path: data/raw/hr_employee_attrition.csv
+raw_dataset_path: data/raw/hr_employee_attrition.csv
+raw_dataset_collected_path: data/processed/raw_dataset.pkl
 
 # Debug config
 print_debug: true
+
+# List of selected column config 
+selected_columns:
+- Attrition
+- Department
+- JobRole
+- JobLevel
+- Gender
+- Age
+- YearsAtCompany
+- YearsInCurrentRole
+- YearsSinceLastPromotion
+- YearsWithCurrManager
+- MonthlyIncome
+- EnvironmentSatisfaction
+- JobSatisfaction
+- WorkLifeBalance
+- PerformanceRating
+
+# Object columns range
+Department:
+- Sales
+- Research & Development
+- Human Resources
+Gender:
+- Female
+- Male
+JobRole:
+- Sales Executive
+- Research Scientist
+- Laboratory Technician
+- Manufacturing Director
+- Healthcare Representative
+- Manager
+- Sales Representative
+- Research Director
+- Human Resources
+
+# Int64 column range
+Age:
+  max: 60
+  min: 18
+EnvironmentSatisfaction:
+  max: 4
+  min: 1
+JobLevel:
+  max: 5
+  min: 1
+JobSatisfaction:
+  max: 4
+  min: 1
+MonthlyIncome:
+  max: 19999
+  min: 1009
+PerformanceRating:
+  max: 4
+  min: 1
+WorkLifeBalance:
+  max: 4
+  min: 1
+YearsAtCompany:
+  max: 40
+  min: 0
+YearsInCurrentRole:
+  max: 18
+  min: 0
+YearsSinceLastPromotion:
+  max: 15
+  min: 0
+YearsWithCurrManager:
+  max: 17
+  min: 0
+
