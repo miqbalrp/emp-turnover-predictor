@@ -1,6 +1,15 @@
 # Path config
 raw_dataset_path: data/raw/hr_employee_attrition.csv
 raw_dataset_collected_path: data/processed/raw_dataset.pkl
+train_set_path:
+  x: data/processed/x_train.pkl
+  y: data/processed/y_train.pkl
+test_set_path:
+  x: data/processed/x_test.pkl
+  y: data/processed/y_test.pkl
+valid_set_path:
+  x: data/processed/x_valid.pkl
+  y: data/processed/y_valid.pkl
 
 # Debug config
 print_debug: true
@@ -23,15 +32,38 @@ selected_columns:
 - WorkLifeBalance
 - PerformanceRating
 
+int64_columns:
+- JobLevel
+- Age
+- YearsAtCompany
+- YearsInCurrentRole
+- YearsSinceLastPromotion
+- YearsWithCurrManager
+- MonthlyIncome
+- EnvironmentSatisfaction
+- JobSatisfaction
+- WorkLifeBalance
+- PerformanceRating
+
+object_columns:
+- Attrition
+- Department
+- JobRole
+- Gender
+
 # Object columns range
-Department:
+Attrition_range:
+- 'Yes'
+- 'No'
+
+Department_range:
 - Sales
 - Research & Development
 - Human Resources
-Gender:
+Gender_range:
 - Female
 - Male
-JobRole:
+JobRole_range:
 - Sales Executive
 - Research Scientist
 - Laboratory Technician
@@ -43,37 +75,57 @@ JobRole:
 - Human Resources
 
 # Int64 column range
-Age:
+Age_range:
   max: 60
   min: 18
-EnvironmentSatisfaction:
+EnvironmentSatisfaction_range:
   max: 4
   min: 1
-JobLevel:
+JobLevel_range:
   max: 5
   min: 1
-JobSatisfaction:
+JobSatisfaction_range:
   max: 4
   min: 1
-MonthlyIncome:
+MonthlyIncome_range:
   max: 19999
   min: 1009
-PerformanceRating:
+PerformanceRating_range:
   max: 4
   min: 1
-WorkLifeBalance:
+WorkLifeBalance_range:
   max: 4
   min: 1
-YearsAtCompany:
+YearsAtCompany_range:
   max: 40
   min: 0
-YearsInCurrentRole:
+YearsInCurrentRole_range:
   max: 18
   min: 0
-YearsSinceLastPromotion:
+YearsSinceLastPromotion_range:
   max: 15
   min: 0
-YearsWithCurrManager:
+YearsWithCurrManager_range:
   max: 17
   min: 0
+
+
+predictor_columns:
+- Department
+- JobRole
+- Gender
+- JobLevel
+- Age
+- YearsAtCompany
+- YearsInCurrentRole
+- YearsSinceLastPromotion
+- YearsWithCurrManager
+- MonthlyIncome
+- EnvironmentSatisfaction
+- JobSatisfaction
+- WorkLifeBalance
+- PerformanceRating
+
+target_column:
+- Attrition
 
