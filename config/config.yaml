@@ -15,31 +15,16 @@ valid_set_path:
 print_debug: true
 
 # List of selected column config 
-selected_columns:
-- Attrition
-- Department
-- JobRole
-- JobLevel
-- Gender
-- Age
-- YearsAtCompany
-- YearsInCurrentRole
-- YearsSinceLastPromotion
-- YearsWithCurrManager
-- MonthlyIncome
-- EnvironmentSatisfaction
-- JobSatisfaction
-- WorkLifeBalance
-- PerformanceRating
-
 int64_columns:
 - JobLevel
 - Age
+- DistanceFromHome
 - YearsAtCompany
 - YearsInCurrentRole
 - YearsSinceLastPromotion
 - YearsWithCurrManager
 - MonthlyIncome
+- MonthlyRate
 - EnvironmentSatisfaction
 - JobSatisfaction
 - WorkLifeBalance
@@ -50,6 +35,7 @@ object_columns:
 - Department
 - JobRole
 - Gender
+- OverTime
 
 # Object columns range
 Attrition_range:
@@ -73,11 +59,17 @@ JobRole_range:
 - Sales Representative
 - Research Director
 - Human Resources
+OverTime_range:
+- 'Yes'
+- 'No'
 
 # Int64 column range
 Age_range:
   max: 60
   min: 18
+DistanceFromHome_range:
+  max: 50
+  min: 0
 EnvironmentSatisfaction_range:
   max: 4
   min: 1
@@ -88,8 +80,11 @@ JobSatisfaction_range:
   max: 4
   min: 1
 MonthlyIncome_range:
-  max: 19999
-  min: 1009
+  max: 49999
+  min: 1000
+MonthlyRate_range:
+  max: 49999
+  min: 1000
 PerformanceRating_range:
   max: 4
   min: 1
