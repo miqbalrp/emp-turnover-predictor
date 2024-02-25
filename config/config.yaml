@@ -10,6 +10,21 @@ test_set_path:
 valid_set_path:
   x: data/processed/x_valid.pkl
   y: data/processed/y_valid.pkl
+train_set_feng_path:
+  x: data/processed/x_train_feng.pkl
+  y: data/processed/y_train_feng.pkl
+test_set_feng_path:
+  x: data/processed/x_test_feng.pkl
+  y: data/processed/y_test_feng.pkl
+valid_set_feng_path:
+  x: data/processed/x_valid_feng.pkl
+  y: data/processed/y_valid_feng.pkl
+
+ohe_Department_path: models/ohe_Department.pkl
+ohe_JobRole_path: models/ohe_JobRole.pkl
+ohe_Gender_path: models/ohe_Gender.pkl
+ohe_OverTime_path: models/ohe_OverTime.pkl
+le_encoder_path: models/le_encoder.pkl
 
 # Debug config
 print_debug: true
@@ -104,23 +119,39 @@ YearsWithCurrManager_range:
   max: 17
   min: 0
 
+missing_value_handling:
+  Age: 37
+  Department: Research & Development
+  DistanceFromHome: 9
+  EnvironmentSatisfaction: 3
+  Gender: Male
+  JobLevel: 2
+  JobRole: Sales Executive
+  JobSatisfaction: 3
+  MonthlyIncome: 6548
+  MonthlyRate: 14465
+  OverTime: 'No'
+  PerformanceRating: 3
+  WorkLifeBalance: 3
+  YearsAtCompany: 7
+  YearsInCurrentRole: 4
+  YearsSinceLastPromotion: 2
+  YearsWithCurrManager: 4
 
 predictor_columns:
-- Department
-- JobRole
-- Gender
 - JobLevel
 - Age
+- DistanceFromHome
 - YearsAtCompany
 - YearsInCurrentRole
-- YearsSinceLastPromotion
 - YearsWithCurrManager
 - MonthlyIncome
 - EnvironmentSatisfaction
 - JobSatisfaction
 - WorkLifeBalance
 - PerformanceRating
+- Department
+- JobRole
+- OverTime
 
-target_column:
-- Attrition
-
+target_column: Attrition
