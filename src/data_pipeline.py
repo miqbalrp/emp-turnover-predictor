@@ -33,8 +33,8 @@ def check_data(input_data, params, api=False):
         """
         If the data input coming from API, then we only check columns that selected as predictor
         """
-        assert input_data.select_dtypes("object").columns.to_list() == (set(params["object_columns"]) & set(params["predictor_columns"])) , "Error occurs in object columns"
-        assert input_data.select_dtypes("int64").columns.to_list() == (set(params["int64_columns"]) & set(params["predictor_columns"])), "Error occurs in object columns"
+        assert input_data.select_dtypes("object").columns.to_list() == list((set(params["object_columns"]) & set(params["predictor_columns"]))) , "Error occurs in object columns"
+        assert input_data.select_dtypes("int64").columns.to_list() == list((set(params["int64_columns"]) & set(params["predictor_columns"]))), "Error occurs in int64 columns"
 
         # Range data checking for obj columns
         for col in (set(params["object_columns"]) & set(params["predictor_columns"])):

@@ -2,3 +2,4 @@
 /data/.DS_Store
 /data/raw/.DS_Store
 /venv_emp_turnover/
+__pycache__/
