@@ -20,6 +20,9 @@ valid_set_feng_path:
   x: data/processed/x_valid_feng.pkl
   y: data/processed/y_valid_feng.pkl
 
+production_model_path: models/production_model.pkl
+training_log_path: log/training_log.json
+
 ohe_Department_path: models/ohe_Department.pkl
 ohe_JobRole_path: models/ohe_JobRole.pkl
 ohe_Gender_path: models/ohe_Gender.pkl
