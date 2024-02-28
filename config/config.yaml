@@ -152,7 +152,6 @@ predictor_columns:
 - EnvironmentSatisfaction
 - JobSatisfaction
 - WorkLifeBalance
-- PerformanceRating
 - Department
 - JobRole
 - OverTime

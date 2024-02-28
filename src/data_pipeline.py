@@ -33,8 +33,14 @@ def check_data(input_data, params, api=False):
         """
         If the data input coming from API, then we only check columns that selected as predictor
         """
-        assert input_data.select_dtypes("object").columns.to_list() == list((set(params["object_columns"]) & set(params["predictor_columns"]))) , "Error occurs in object columns"
-        assert input_data.select_dtypes("int64").columns.to_list() == list((set(params["int64_columns"]) & set(params["predictor_columns"]))), "Error occurs in int64 columns"
+        expected_object_columns = set(list((set(params["object_columns"]) & set(params["predictor_columns"]))))
+        input_object_columns = set(input_data.select_dtypes("object").columns.to_list())
+
+        expected_int64_columns = set(list((set(params["int64_columns"]) & set(params["predictor_columns"]))))
+        input_int64_columns = set(input_data.select_dtypes("int64").columns.to_list())
+
+        assert input_object_columns == expected_object_columns, f"Error occurs in object columns, {expected_object_columns - input_object_columns}"
+        assert input_int64_columns == expected_int64_columns, f"Error occurs in int64 columns, {expected_int64_columns - input_int64_columns}"
 
         # Range data checking for obj columns
         for col in (set(params["object_columns"]) & set(params["predictor_columns"])):
@@ -52,8 +58,8 @@ if __name__ == "__main__":
 
     check_data(raw_dataset, config_data, api=False)
 
-    x = raw_dataset[config_data["int64_columns"]+config_data["object_columns"]].drop(columns=['Attrition']).copy()
-    y = raw_dataset['Attrition'].copy()
+    x = raw_dataset[config_data["predictor_columns"]].copy() # note that this is different with notebook where x_train still contain non-predictor features
+    y = raw_dataset[config_data["target_column"]].copy()
 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 42, stratify = y)
     x_valid, x_test, y_valid, y_test = train_test_split(x_test, y_test, test_size = 0.5, random_state = 42, stratify = y_test)

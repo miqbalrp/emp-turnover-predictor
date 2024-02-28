@@ -8,10 +8,9 @@ import preprocessing as preprocessing
 
 config_data = util.load_config()
 
-ohe_Department = util.pickle_load(config_data["ohe_Department_path"])
-ohe_JobRole = util.pickle_load(config_data["ohe_JobRole_path"])
-ohe_Gender = util.pickle_load(config_data["ohe_Gender_path"])
-ohe_OverTime = util.pickle_load(config_data["ohe_OverTime_path"])
+ohe_Department = config_data["ohe_Department_path"]
+ohe_JobRole = config_data["ohe_JobRole_path"]
+ohe_OverTime = config_data["ohe_OverTime_path"]
 
 le_encoder = util.pickle_load(config_data["le_encoder_path"])
 model_data = util.pickle_load(config_data["production_model_path"])
@@ -27,7 +26,6 @@ class api_data(BaseModel):
     EnvironmentSatisfaction : int
     JobSatisfaction : int
     WorkLifeBalance : int
-    PerformanceRating : int
     Department : str
     JobRole : str
     OverTime : str
@@ -38,13 +36,11 @@ app = FastAPI()
 def home():
     return "Employer-Turnover-Predictor API is up!"
 
-if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0", port=8080)
-
 @app.post("/predict/")
 def predict(data: api_data):
     data = pd.DataFrame(data).set_index(0).T.reset_index(drop = True)
-    
+    data_columns = data.columns.to_list()
+
     # data type
     data = pd.concat(
         [
@@ -53,6 +49,7 @@ def predict(data: api_data):
         ],
         axis = 1
     )
+    data = data[data_columns]
 
     # check data
     try:
@@ -67,11 +64,18 @@ def predict(data: api_data):
 
     # predict
     y_pred = model_data["model_data"]["model_object"].predict(data)
+    y_pred = list(le_encoder.inverse_transform(y_pred))[0] 
+
+    return {"res" : y_pred, "error_msg": ""}
+
+if __name__ == "__main__":
+    uvicorn.run("api:app", host="0.0.0.0", port=8080)
+
 
 # {
 #   "JobLevel": 2,
 #   "Age": 30,
-#   "DistanceFromHome": 5,
+#   "DistanceFromHome": 5,``
 #   "YearsAtCompany": 3,
 #   "YearsInCurrentRole": 2,
 #   "YearsWithCurrManager": 1,

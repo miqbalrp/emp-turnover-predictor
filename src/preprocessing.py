@@ -98,10 +98,9 @@ if __name__ == "__main__":
 
     ohe_Department = ohe_fit(config_data['Department_range'], config_data['ohe_Department_path'])
     ohe_JobRole = ohe_fit(config_data['JobRole_range'], config_data['ohe_JobRole_path'])
-    ohe_Gender = ohe_fit(config_data['Gender_range'], config_data['ohe_Gender_path'])
     ohe_OverTime = ohe_fit(config_data['OverTime_range'], config_data['ohe_OverTime_path'])
 
-    for col in ['Department', 'JobRole', 'Gender', 'OverTime']:
+    for col in ['Department', 'JobRole', 'OverTime']:
         train_set = ohe_transform(train_set, col, config_data[f"ohe_{col}_path"])
         valid_set = ohe_transform(valid_set, col, config_data[f"ohe_{col}_path"])
         test_set = ohe_transform(test_set, col, config_data[f"ohe_{col}_path"])
