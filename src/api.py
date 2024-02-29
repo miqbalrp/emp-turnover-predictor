@@ -38,7 +38,9 @@ def home():
 
 @app.post("/predict/")
 def predict(data: api_data):
+    print(data)
     data = pd.DataFrame(data).set_index(0).T.reset_index(drop = True)
+    print(data)
     data_columns = data.columns.to_list()
 
     # data type
@@ -63,29 +65,10 @@ def predict(data: api_data):
     data = preprocessing.ohe_transform(data, "OverTime", ohe_OverTime)
 
     # predict
-    y_pred = model_data["model_data"]["model_object"].predict(data)
-    y_pred = list(le_encoder.inverse_transform(y_pred))[0] 
+    prediction = model_data["model_data"]["model_object"].predict_proba(data)[:, 1][0]
+    result = f'The probability of employee turnover is: {prediction:.0%}'
 
-    return {"res" : y_pred, "error_msg": ""}
+    return {"res" : result, "error_msg": ""}
 
 if __name__ == "__main__":
     uvicorn.run("api:app", host="0.0.0.0", port=8080)
-
-
-# {
-#   "JobLevel": 2,
-#   "Age": 30,
-#   "DistanceFromHome": 5,``
-#   "YearsAtCompany": 3,
-#   "YearsInCurrentRole": 2,
-#   "YearsWithCurrManager": 1,
-#   "MonthlyIncome": 5000,
-#   "EnvironmentSatisfaction": 4,
-#   "JobSatisfaction": 2,
-#   "WorkLifeBalance": 1,
-#   "PerformanceRating": 1,
-#   "Department": "Sales",
-#   "JobRole": "Sales Representative",
-#   "OverTime": "No"
-# }
-
