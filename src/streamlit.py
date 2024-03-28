@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from PIL import Image
 import util as util
+import time
 
 config_data = util.load_config()
 
@@ -14,7 +15,10 @@ job_levels_mapping = {
 }
 
 st.title("Employer Turnover Prediction")
-st.write("Want to know how likely your employee to turnover and why? :cry: :thinking_face: :cry: :thinking_face: :cry: :thinking_face: :cry: :thinking_face:")
+st.info("""
+        Welcome to ETP Module! \n
+        Please enter the employee information on the below section to make prediction!
+        """)
 
 with st.form(key = "emp_features"):
     
@@ -106,18 +110,27 @@ with st.form(key = "emp_features"):
     if submitted:
         st.write("Employee information has been submitted")
 
-# {
-#   "JobLevel": 1,
-#   "Age": 27,
-#   "DistanceFromHome": 10,
-#   "YearsAtCompany": 3,
-#   "YearsInCurrentRole": 2,
-#   "YearsWithCurrManager": 1,
-#   "MonthlyIncome": 1000,
-#   "EnvironmentSatisfaction": 1,
-#   "JobSatisfaction": 1,
-#   "WorkLifeBalance": 1,
-#   "Department": "Sales", OK
-#   "JobRole": "Sales Representative", OK 
-#   "OverTime": "Yes"
-# }
+        raw_data = {
+            "JobLevel": selected_job_level,
+            "Age": age,
+            "DistanceFromHome": distance_from_home,
+            "YearsAtCompany": years_at_company,
+            "YearsInCurrentRole": years_in_current_role,
+            "YearsWithCurrManager": years_with_current_manager,
+            "MonthlyIncome": monthly_income,
+            "EnvironmentSatisfaction": environment_satisfaction,
+            "JobSatisfaction": job_satisfaction,
+            "WorkLifeBalance": work_life_balance,
+            "Department": department,
+            "JobRole": job_role, 
+            "OverTime": overtime
+        }
+
+        with st.spinner("Sending data to prediction server ..."):
+            time.sleep(3)
+            res = requests.post("http://0.0.0.0:8080/predict", json = raw_data).json()
+        
+        if res["error_msg"] != "":
+            st.error("Error Occurs While Predicting: {}".format(res["error_msg"]))
+        else:
+            st.write(res["res"])
