@@ -6,6 +6,8 @@ import util as util
 import data_pipeline as data_pipeline
 import preprocessing as preprocessing 
 
+import shap
+
 config_data = util.load_config()
 
 ohe_Department = config_data["ohe_Department_path"]
@@ -66,9 +68,22 @@ def predict(data: api_data):
 
     # predict
     prediction = model_data["model_data"]["model_object"].predict_proba(data)[:, 1][0]
-    result = f'The probability of employee turnover is: {prediction:.0%}'
+    # result = f'The probability of employee turnover is: {prediction:.0%}'
 
-    return {"res" : result, "error_msg": ""}
+    explainer = shap.Explainer(model_data["model_data"]["model_object"])
+    shap_base_values = explainer(data).base_values
+    shap_values = explainer(data).values
+    shap_features = explainer(data).data
+    shap_feature_name = data.columns
+
+    print()
+
+    return {"res" : prediction, 
+            "shap_values" : shap_values.tolist(), 
+            "shap_base_values" : shap_base_values.tolist(), 
+            "shap_feature" : shap_features.tolist(), 
+            "shap_feature_name" : shap_feature_name.tolist(), 
+            "error_msg" : ""}
 
 if __name__ == "__main__":
     uvicorn.run("api:app", host="0.0.0.0", port=8080)
