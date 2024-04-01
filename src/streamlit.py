@@ -21,8 +21,8 @@ job_levels_mapping = {
 }
 
 st.title("Employer Turnover Prediction")
-st.text("""
-        Welcome to ETP Module! 
+st.write("""
+        Welcome to ETP Module! \n
         Please enter the employee information on the below section to make prediction!
         """)
 
@@ -142,7 +142,7 @@ if submitted:
     if res["error_msg"] != "":
         st.error("Error Occurs While Predicting: {}".format(res["error_msg"]))
     else:
-        st.text(f'The likelihood that {employee_name} will turnover is:')
+        st.write(f'The likelihood that {employee_name} will turnover is:')
         st.metric('Probability', f'{res["res"]:.1%}', label_visibility='collapsed')
 
         base_value = np.array(res["shap_base_values"])[0][1]
@@ -169,11 +169,11 @@ if submitted:
 
         st.subheader("Factors that most contribute to the employee being likely to turnover:")
         for i in range(len(positive_factors)): 
-            st.text(f"{i+1}. {positive_factors['feature_name'][i]} = {positive_factors['feature_value'][i]} ({positive_factors['shap_value'][i]:.0%})")
+            st.write(f"{i+1}. {positive_factors['feature_name'][i]} = {positive_factors['feature_value'][i]} ({positive_factors['shap_value'][i]:.0%})")
 
         st.subheader("Factors that most significantly reduces the likelihood of employee turnover")
         for i in range(len(negative_factors)): 
-            st.text(f"{i+1}. {negative_factors['feature_name'][i]} = {negative_factors['feature_value'][i]} ({negative_factors['shap_value'][i]:.0%})")
+            st.write(f"{i+1}. {negative_factors['feature_name'][i]} = {negative_factors['feature_value'][i]} ({negative_factors['shap_value'][i]:.0%})")
 
 
 
